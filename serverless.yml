@@ -1,0 +1,12 @@
+service: eshop-bot
+
+provider:
+  name: aws
+  region: eu-west-1
+  runtime: nodejs14.x
+
+functions:
+  hello:
+    handler: src/handler.hello
+    events:
+      - http: GET /
