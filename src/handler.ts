@@ -1,1 +1,1 @@
-export const hello = () => ({statusCode: 200, body: "hemlo"})
+export const hello = async () => ({statusCode: 200, body: "hemlo13"})

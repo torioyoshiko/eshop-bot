@@ -6,6 +6,7 @@
 .pnp.js
 .idea
 .serverless
+.esbuild
 
 # testing
 /coverage
