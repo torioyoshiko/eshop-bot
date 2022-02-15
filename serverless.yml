@@ -4,6 +4,7 @@ provider:
   name: aws
   region: eu-west-1
   runtime: nodejs14.x
+  stage: dev
 
 functions:
   hello:
@@ -14,3 +15,21 @@ functions:
 plugins:
   - serverless-esbuild
   - serverless-offline
+
+resources:
+  Resources:
+    ProductsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${opt:stage, self:provider.stage}-products
+        AttributeDefinitions:
+          - AttributeName: region
+            AttributeType: S
+          - AttributeName: nsuid
+            AttributeType: S
+        KeySchema:
+          - AttributeName: region
+            KeyType: HASH
+          - AttributeName: nsuid
+            KeyType: RANGE
