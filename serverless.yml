@@ -33,3 +33,53 @@ resources:
             KeyType: HASH
           - AttributeName: nsuid
             KeyType: RANGE
+    ProductPricesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${opt:stage, self:provider.stage}-product-prices
+        AttributeDefinitions:
+          - AttributeName: nsuidCountryCode
+            AttributeType: S
+          - AttributeName: date
+            AttributeType: S
+        KeySchema:
+          - AttributeName: nsuidCountryCode
+            KeyType: HASH
+          - AttributeName: date
+            KeyType: RANGE
+    UsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${opt:stage, self:provider.stage}-users
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+    UserSubscriptionsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${opt:stage, self:provider.stage}-user-subscriptions
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+          - AttributeName: nsuidCountryCode
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+          - AttributeName: nsuidCountryCode
+            KeyType: RANGE
+        GlobalSecondaryIndexes:
+          - IndexName: nsuid-user-index
+            KeySchema:
+              - AttributeName: nsuidCountryCode
+                KeyType: HASH
+              - AttributeName: userId
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
